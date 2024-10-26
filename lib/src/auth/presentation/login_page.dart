@@ -1,4 +1,5 @@
 import 'package:fl_mod3/core/routes/app_routes.dart';
+import 'package:fl_mod3/src/auth/presentation/name_text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/icon_button_theme.dart';
@@ -18,11 +19,7 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
             const FlutterLogo(size: 200),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Nombre completo',
-              ),
-            ),
+            NameTextField(),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(
