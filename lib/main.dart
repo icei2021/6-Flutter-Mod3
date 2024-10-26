@@ -1,47 +1,43 @@
+import 'package:fl_mod3/core/theme/theme_inherited_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'core/routes/app_routes.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final themeProvider = context.watch<ThemeProvider>();
-
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: themeProvider.isDark ? Brightness.dark : Brightness.light,
-        useMaterial3: true,
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder(),
-        ),
-      ),
-      routes: AppRoutes.routes,
-      initialRoute: AppRoutes.login,
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-class ThemeProvider extends ChangeNotifier {
-  bool isDark = false;
+class _MyAppState extends State<MyApp> {
+  bool _isDark = false;
 
-  void changeTheme() {
-    isDark = !isDark;
-    notifyListeners();
+  @override
+  Widget build(BuildContext context) {
+    return ThemeInheritedWidget(
+      changeTheme: () {
+        _isDark = !_isDark;
+        setState(() {});
+      },
+      isDark: _isDark,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: _isDark ? Brightness.dark : Brightness.light,
+          useMaterial3: true,
+          inputDecorationTheme: const InputDecorationTheme(
+            border: OutlineInputBorder(),
+          ),
+        ),
+        routes: AppRoutes.routes,
+        initialRoute: AppRoutes.login,
+      ),
+    );
   }
 }
